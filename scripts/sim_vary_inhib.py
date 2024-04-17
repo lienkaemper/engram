@@ -38,7 +38,7 @@ with open("../results/compare_inhib/index.pkl", "wb") as f:
 
 #simulation parameters 
 dt = 0.02
-tstop = 500
+tstop = 50000
 
 
 b_small = np.array([.4, .4, .5, .4, .4, .5])  #without excitability

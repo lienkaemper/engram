@@ -36,7 +36,7 @@ g_ii = 1
 
 
 dt = 0.02
-tstop = 500
+tstop = 50000
 
 
 pEE = .2
