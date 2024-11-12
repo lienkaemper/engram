@@ -1,6 +1,6 @@
 # Engram
 
-Spiking model for "CA1 Engram Cell Dynamics Before and After Learning"
+Spiking model for "CA1 Engram Cell Dynamics Before and After Learning": https://www.biorxiv.org/content/10.1101/2024.04.16.589790v1.abstract
 
 To make Figure 5B:
 
