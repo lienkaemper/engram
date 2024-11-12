@@ -19,7 +19,7 @@ filtered_df = df[df['h'] == 2]
 # Step 2: Melt the data to create long-format dataframe for easier plotting
 melted_df = pd.melt(
     filtered_df,
-    id_vars=['g', 'b_diff'], 
+    id_vars=['g', 'disinhibition'], 
     value_vars=['pred_cor_engram_vs_engram', 'pred_cor_non_engram_vs_non_engram', 'pred_cor_engram_vs_non_engram'],
     var_name='correlation_type', 
     value_name='correlation_value'
@@ -40,7 +40,7 @@ for i, g_value in enumerate(melted_df['g'].unique()):
     
     sns.lineplot(
         data=subset,
-        x='b_diff', 
+        x='disinhibition', 
         y='correlation_value', 
         hue='correlation_type',
         palette= [engram_color, non_engram_color,  cross_color], ax = axs[i],
@@ -64,7 +64,7 @@ plt.show()
 # do the same thing for the rates
 melted_df = pd.melt(
     filtered_df,
-    id_vars=['g', 'b_diff'], 
+    id_vars=['g', 'disinhibition'], 
     value_vars=['pred_rate_engram', 'pred_rate_non_engram'],
     var_name='rate_type', 
     value_name='rate_value',
@@ -84,7 +84,7 @@ for i, g_value in enumerate(melted_df['g'].unique()):
     
     sns.lineplot(
         data=subset,
-        x='b_diff', 
+        x='disinhibition', 
         y='rate_value', 
         hue='rate_type',
         palette= [engram_color, non_engram_color], ax = axs[i],

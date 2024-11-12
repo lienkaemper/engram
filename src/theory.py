@@ -25,11 +25,14 @@ def y_pred(J, y0):
 
 
 
-def y_0_quad(W, y0, steps = 1000,  dt = 0.1):
+def y_0_quad(W, y0, steps = 1000,  dt = 0.1, gain = None):
     ''' Given a connectivity matrix W and input y0, returns the tree-level rate in a quadratic model, 
         i.e. returns the rate y that solves y = (W y + y0)**2
     '''
     N = W.shape[0]
+    gain_vec = np.ones(N)
+    if gain is not None:
+        gain_vec *= gain
     if len(np.shape(y0)) == 0:
         y = y0 * np.ones(N)
     elif len(y0) == N:
@@ -38,7 +41,7 @@ def y_0_quad(W, y0, steps = 1000,  dt = 0.1):
         raise Exception("input y0 must either be a scalar, or match shape of matrix J")
     v = np.random.rand(N)
     for i in range(steps):
-        v  = v + dt*(-v +  W @ np.maximum(0,v )**2+y0)
+        v  = v + dt*(-v +  W @ (gain_vec * np.maximum(0,v )**2) +y0)
     y = v**2
     return y
 
