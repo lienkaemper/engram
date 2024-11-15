@@ -34,10 +34,9 @@ melted_df['correlation_type'] = melted_df['correlation_type'].replace({
 
 # Step 3: Plot
 # Loop over each unique value of 'g' and make a plot
-fig, axs = plt.subplots(1,3, figsize = (6,2))
+fig, axs = plt.subplots(1,3, figsize = (6,2), sharey=True)
 for i, g_value in enumerate(melted_df['g'].unique()):
     subset = melted_df[melted_df['g'] == g_value]
-    
     sns.lineplot(
         data=subset,
         x='disinhibition', 
@@ -78,7 +77,7 @@ melted_df['rate_type'] = melted_df['rate_type'].replace({
 
 # Step 3: Plot
 # Loop over each unique value of 'g' and make a plot
-fig, axs = plt.subplots(1,3, figsize = (6,2))
+fig, axs = plt.subplots(1,3, figsize = (6,2), sharey=True)
 for i, g_value in enumerate(melted_df['g'].unique()):
     subset = melted_df[melted_df['g'] == g_value]
     

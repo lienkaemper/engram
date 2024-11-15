@@ -32,11 +32,11 @@ with open(dirname + "/param_dict.pkl", "rb") as file:
     param_dict = pkl.load(file)
 
 
-
+print(param_dict)
 N = param_dict["N"]
 Ns = np.array([len(R) for R in index_dict.values()])
-h_min = param_dict["h_min"]
-h_max = param_dict["h_max"]
+h_min = 1
+h_max = 2
 
 g_ii = param_dict["g_ii"]
 J0 = param_dict["J"]
@@ -48,7 +48,7 @@ b = np.ones(N)
 for i, key in enumerate(index_dict.keys()):
     b[index_dict[key]] = b_small[i]
 
-n_h = 10
+n_h = 3
 h_range = np.linspace(h_min, h_max, n_h)
 
 region_list = list(index_dict.keys())
@@ -76,6 +76,7 @@ pred_cors = []
 regions = []
 reduced_rates = []
 for h in h_range:
+    print(h)
     J =  hippo_weights(index_dict, A, h,h, g, J0, i_plast = 1, g_ii = g_ii)
     J_small = sum_by_region(J, index_dict=index_dict)
     

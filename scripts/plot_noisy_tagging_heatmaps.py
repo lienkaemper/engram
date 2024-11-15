@@ -63,6 +63,10 @@ baseline_cor = pred_cor_df[(pred_cor_df['h'] == 1) & (pred_cor_df['regions'] == 
 rates_matrix = np.zeros((n_noise, n_h))
 cors_matrix = np.zeros((n_noise, n_h))
 
+h_list = []
+fp_list = []
+rates_rat_list = []
+cor_rat_list = []
 for i, h in enumerate(hs): 
     for j, p_FP in enumerate(noise_levels):
         rate_engram = pred_rate_df[(pred_rate_df['h'] == h) & (pred_rate_df['region'] == 'CA1E')].iloc[0]["corr_rate"]
@@ -77,14 +81,19 @@ for i, h in enumerate(hs):
 
         rates_matrix[j, i] = noisy_rate/baseline
         cors_matrix[j, i] = noisy_cor/baseline_cor
-    
+        h_list.append(h)
+        fp_list.append(p_FP)
+        rates_rat_list.append(rates_matrix[j,i])
+        cor_rat_list.append(cors_matrix[j,i])
+
+
 cs = axs[0].imshow(rates_matrix, origin='lower',  extent=(1, 2, 0,1), cmap = 'magma')
 plt.colorbar(cs, ax = axs[0])
 axs[0].set_title("Rates")
 axs[0].set_xlabel("Engram strength h")
 axs[0].set_ylabel("False positive probability")
 
-cs = axs[1].imshow(cors_matrix, origin='lower', extent=(1, 2, 0,1), cmap = 'magma')
+cs = axs[1].imshow(cors_matrix, origin='lower', extent=(1, 2, 0,1), cmap = 'magma', vmin = 1, vmax = 2)
 axs[1].set_title("Correlations")
 axs[1].set_xlabel("Engram strength h")
 axs[1].set_ylabel("False positive probability")
@@ -94,3 +103,22 @@ plt.tight_layout()
 plt.savefig("../results/plots/noisy_tagging_heatmaps.pdf")
 plt.show()
 
+
+df = pd.DataFrame({"h": h_list, "p_FP": fp_list, "cor_ratio": cor_rat_list, "rate_ratio" : rates_rat_list })\
+
+fig, axs = plt.subplots(1,2, figsize = (4,2))
+
+sns.lineplot(data = df, x = "p_FP", y = "rate_ratio", hue = "h", ax = axs[0])
+axs[0].set_title("Rates")
+axs[0].set_xlabel("False positive probability")
+axs[0].set_ylabel("Rate ratio")
+
+sns.lineplot(data = df, x = "p_FP", y = "cor_ratio", hue = "h", ax = axs[1])
+axs[1].set_title("Correlations")
+axs[1].set_xlabel("False positive probability")
+axs[0].set_ylabel("Correlation ratio")
+
+
+sns.despine()
+plt.tight_layout()
+plt.show()
