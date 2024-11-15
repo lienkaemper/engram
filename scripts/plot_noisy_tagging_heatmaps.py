@@ -118,6 +118,7 @@ axs[1].set_title("Correlations")
 axs[1].set_xlabel("False positive probability")
 axs[0].set_ylabel("Correlation ratio")
 
+plt.savefig("../results/plots/noisy_tagging_lineplots.pdf")
 
 sns.despine()
 plt.tight_layout()
